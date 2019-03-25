@@ -23,7 +23,7 @@
 # [X] Scheduled Task
 # [X] Screensaver
 # [X] Security Support Provider
-# [ ] Shortcuts or symbolic links
+# [X] Shortcuts or symbolic links
 # [X] Time Providers
 # [X] Winlogon Helper DLL
 # [X] TCP Connections
@@ -36,7 +36,7 @@
 # [X] Powershell history
 # [ ] Devices(ethernet, cd, wireless vs.)
 # [ ] System32 hash check
-# [ ] AV, firewall condition
+# [X] AV, firewall condition
 # [ ] Allowed denied ports
 # [X] Office documents
 
@@ -118,6 +118,19 @@ function findOfficeDocs() {
 	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
 }
 
+function findLNKFiles() {
+	"[+] SHORTCUT FILES"
+
+	$users = Get-ChildItem -Path C:\Users
+	$shell = New-Object -ComObject Wscript.Shell
+
+	foreach($i in $users) {
+			Get-ChildItem -Path ("C:\Users\" + $i + "\Desktop") -Filter *.lnk -Recurse -ErrorAction SilentlyContinue -Force | foreach-object {
+				"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
+			}
+	}
+}
+
 function scheduledTasks() {
 	"[+] SCHEDULED TASKS"
 	Get-ScheduledTask
@@ -195,4 +208,16 @@ function getHistory() {
 function getDrives() {
 	"[+] DRIVES"
 	Get-PSDrive
+}
+
+function getFirewallStatus() {
+	"[+] FIREWALL STATUS"
+
+	Get-NetFirewallProfile
+}
+
+function getAVStatus () {
+	"[+] AV STATUS"
+
+	Get-MpComputerStatus
 }
