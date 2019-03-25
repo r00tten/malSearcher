@@ -38,7 +38,7 @@
 # [ ] System32 hash check
 # [ ] AV, firewall condition
 # [ ] Allowed denied ports
-# [ ] Office documents
+# [X] Office documents
 
 function registryValues() {
 	"[+] REGISTRY VALUES" 
@@ -103,6 +103,19 @@ function registryValues() {
 			Get-ItemProperty -Path $element
 		}
 	}
+}
+
+function findOfficeDocs() {
+	"[+] OFFICE DOCUMENTS"
+
+	"[-] .docx"
+	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force	
+
+	"[-] .xlsx"
+	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force	
+
+	"[-] .pptx"
+	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
 }
 
 function scheduledTasks() {
