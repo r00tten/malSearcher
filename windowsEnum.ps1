@@ -34,7 +34,7 @@
 # [X] Disks
 # [X] Loaded modules by processes
 # [X] Powershell history
-# [ ] Devices(ethernet, cd, wireless vs.)
+# [X] Devices(ethernet, cd, wireless vs.)
 # [ ] System32 hash check
 # [X] AV, firewall condition
 # [ ] Allowed denied ports
@@ -216,8 +216,14 @@ function getFirewallStatus() {
 	Get-NetFirewallProfile
 }
 
-function getAVStatus () {
+function getAVStatus() {
 	"[+] AV STATUS"
 
 	Get-MpComputerStatus
+}
+
+function getDevices() {
+	"[+] DEVICES"
+
+	Get-Pnodevice
 }
