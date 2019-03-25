@@ -1,7 +1,6 @@
-# [ ] HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options
-# [ ] HKLM\SOFTWARE{\Wow6432Node}\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\
+# [X] Image File Execution Options
 # [X] Accounts
-# [ ] AppCert DLLs
+# [X] AppCert DLLs
 # [X] AppInit DLLs
 # [ ] Bypass UAC
 # [X] Authentication Packages
@@ -9,8 +8,7 @@
 # [ ] Change Default File Association
 # [ ] File System Permissions Weakness
 # [X] Hidden Files and Directories
-# [ ] HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\ ReportingMode
-# [ ] HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit\ MonitorProcess
+# [X] Silent Process Exit
 # [X] Logon Scripts
 # [X] Services
 # [X] Netsh Helper DLL
@@ -36,10 +34,16 @@
 # [X] Disks
 # [X] Loaded modules by processes
 # [X] Powershell history
+# [ ] Devices(ethernet, cd, wireless vs.)
+# [ ] System32 hash check
+# [ ] AV, firewall condition
+# [ ] Allowed denied ports
+# [ ] Office documents
 
 function registryValues() {
 	"[+] REGISTRY VALUES" 
 	
+	# Creating HKU drive
 	New-PSDrive -PSProvider Registry -Name -HKU -Root HKEY_USERS
 
 	$users = @(Get-ChildItem -Path HKU:/ -Name)
@@ -72,17 +76,25 @@ function registryValues() {
 		"HKCU:\Control Panel\Desktop",
 		"HKLM:\System\CurrentControlSet\Services\W32Time\TimeProviders",
 		"HKLM:\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Winlogon",
-		"HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon"
+		"HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon",
+		"HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Windows\Appinit_Dlls",
+		"HKLM:\Software\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Windows\Appinit_Dlls",
+		"HKLM:\System\CurrentControlSet\Control\Session Manager\AppCertDlls".
+		"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options",
+		"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows NT\CurrentVersion\Image File Execution Options",
+		"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SilentProcessExit"
 	)
-	
+
 	foreach($element in $paths) {
 		"`t[-] " + $element
 		if(($element | Select-String -Pattern "HKCU:\\") -ne "") {
+			# Converting HKCU keys to HKU
 			$j = $element.split(":")[1]
 			foreach($i in $users) {
 				Get-ItemProperty -Path ("HKU:/" + $i + $j)
 			}
 		} elseif(($element | Select-String -Pattern "TimeProviders") -ne "") {
+			# Get all sub-TimeProviders
 			$timeProviders = @(Get-ChildItem -Path $element -Name)
 				foreach($k in $timeProviders) {
 					Get-ItemProperty -Path ($element + "\" + $k)
