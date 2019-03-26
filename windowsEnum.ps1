@@ -276,7 +276,7 @@ function getAVStatus() {
 function getDevices() {
 	"[+] DEVICES"
 
-	Get-Pnodevice
+	Get-Pnpdevice
 }
 
 function getNetAdaptConf() {
