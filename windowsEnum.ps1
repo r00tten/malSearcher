@@ -45,7 +45,9 @@ function getRegistryValues() {
 	
 	# Creating HKU drive
 	New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
-	"`n`n`n"
+	""
+	""
+	""
 
 	$users = @(Get-ChildItem -Path HKU:/ -Name)
 
@@ -95,7 +97,7 @@ function getRegistryValues() {
 				$path = ("HKU:/" + $i + $j)
 				$path.PadLeft($path).length + 8)
 				Get-ItemProperty -Path $path
-				"`n"
+				""
 			}
 		} elseif(($element | Select-String -Pattern "TimeProviders") -ne "") {
 			# Get all sub-TimeProviders
@@ -104,7 +106,7 @@ function getRegistryValues() {
 					$path = ($element + "\" + $k)
 					$path.PadLeft($path).length + 8)
 					Get-ItemProperty -Path $path
-					"`n"
+					""
 				}
 		} else {
 			Get-ItemProperty -Path $element
@@ -127,11 +129,11 @@ function findOfficeDocs() {
 
 	"[-] .docx".PadLeft("[-] .docx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force	
-	"`n"
+	""
 
 	"[-] .xlsx".PadLeft("[-] .xlsx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force	
-	"`n"
+	""
 
 	"[-] .pptx".PadLeft("[-] .pptx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
@@ -161,7 +163,7 @@ function getUsers() {
 
 	"[-] Local Users".PadLeft("[-] Local Users").length + 8)
 	Get-LocalUser
-	"`n"
+	""
 
 	"[-] AD Users".PadLeft("[-] AD Users").length + 8)
 	Get-ADUser
@@ -220,7 +222,7 @@ function getBITS() {
 
 	"[-] Bits Status".PadLeft("[-] Bits Status").length + 8)
 	sc.exe query BITS
-	"`n"
+	""
 
 	"[-] Bits Jobs".PadLeft("[-] Bits Jobs").length + 8)
 	bitsadmin /list /allusers /verbose
@@ -231,7 +233,7 @@ function getProcessesNModules() {
 
 	$processes = Get-Process
 	$processes
-	"`n"
+	""
 	
 	"[+] MODULES"
 	$processes | foreach-object { 
