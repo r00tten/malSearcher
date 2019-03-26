@@ -238,7 +238,7 @@ function getProcessesNModules() {
 	"[+] MODULES"
 	$processes | foreach-object { 
 		$modules = $_ | Select Modules; 
-		("[-] " + $_.ProcessName).PadLeft("[-] " + $_.ProcessName).length + 8)
+		("[-] " + $_.ProcessName).PadLeft(("[-] " + $_.ProcessName).length + 8)
 		$modules.Modules 
 	}
 }
