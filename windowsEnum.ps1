@@ -45,6 +45,7 @@ function getRegistryValues() {
 	
 	# Creating HKU drive
 	New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
+	"`n`n`n"
 
 	$users = @(Get-ChildItem -Path HKU:/ -Name)
 
@@ -86,22 +87,24 @@ function getRegistryValues() {
 	)
 
 	foreach($element in $paths) {
-		"`t[-] " + $element
+		("[-] " + $element).PadLeft(("[-] " + $element).length + 4)
 		if(($element | Select-String -Pattern "HKCU:\\") -ne "") {
 			# Converting HKCU keys to HKU
 			$j = $element.split(":")[1]
 			foreach($i in $users) {
 				$path = ("HKU:/" + $i + $j)
-				"`t`t" + $path
+				$path.PadLeft($path).length + 8)
 				Get-ItemProperty -Path $path
+				"`n"
 			}
 		} elseif(($element | Select-String -Pattern "TimeProviders") -ne "") {
 			# Get all sub-TimeProviders
 			$timeProviders = @(Get-ChildItem -Path $element -Name)
 				foreach($k in $timeProviders) {
 					$path = ($element + "\" + $k)
-					"`t`t" + $path
+					$path.PadLeft($path).length + 8)
 					Get-ItemProperty -Path $path
+					"`n"
 				}
 		} else {
 			Get-ItemProperty -Path $element
@@ -122,13 +125,15 @@ function getStartupFolder() {
 function findOfficeDocs() {
 	"[+] OFFICE DOCUMENTS"
 
-	"[-] .docx"
+	"[-] .docx".PadLeft("[-] .docx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force	
+	"`n"
 
-	"[-] .xlsx"
+	"[-] .xlsx".PadLeft("[-] .xlsx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force	
+	"`n"
 
-	"[-] .pptx"
+	"[-] .pptx".PadLeft("[-] .pptx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
 }
 
@@ -154,10 +159,11 @@ function getScheduledTasks() {
 function getUsers() {
 	"[+] USERS"
 
-	"`t[-] Local Users"
+	"[-] Local Users".PadLeft("[-] Local Users").length + 8)
 	Get-LocalUser
+	"`n"
 
-	"`t[-] AD Users"
+	"[-] AD Users".PadLeft("[-] AD Users").length + 8)
 	Get-ADUser
 }
 
@@ -212,10 +218,11 @@ function getTCPConnections() {
 function getBITS() {
 	"[+] BITS"
 
-	"[-] Bits Status"
+	"[-] Bits Status".PadLeft("[-] Bits Status").length + 8)
 	sc.exe query BITS
+	"`n"
 
-	"[-] Bits jobs"
+	"[-] Bits Jobs".PadLeft("[-] Bits Jobs").length + 8)
 	bitsadmin /list /allusers /verbose
 }
 
@@ -224,11 +231,12 @@ function getProcessesNModules() {
 
 	$processes = Get-Process
 	$processes
+	"`n"
 	
 	"[+] MODULES"
 	$processes | foreach-object { 
 		$modules = $_ | Select Modules; 
-		"`t[-] " + $_.ProcessName; 
+		("[-] " + $_.ProcessName).PadLeft("[-] " + $_.ProcessName).length + 8)
 		$modules.Modules 
 	}
 }
@@ -282,6 +290,7 @@ function getComSystemInfo() {
 }
 
 function banner() {
+	""
     "             ___   ___  _   _             "
     "            / _ \ / _ \| | | |            "
     "       _ __| | | | | | | |_| |_ ___ _ __  "
@@ -295,29 +304,53 @@ function banner() {
 
 function scriptManager() {
 	banner
+	"`n`n`n"
 	getComSystemInfo
+	"`n`n`n"
 	getNetAdaptConf
+	"`n`n`n"
 	getDevices
+	"`n`n`n"
 	getAVStatus
+	"`n`n`n"
 	getDrives
+	"`n`n`n"
 	getFirewallStatus
+	"`n`n`n"
 	getEnvironmentVariables
+	"`n`n`n"
 	getHistory
+	"`n`n`n"
 	getProcessesNModules
+	"`n`n`n"
 	getBITS
+	"`n`n`n"
 	getTCPConnections
+	"`n`n`n"
 	getClipboard
+	"`n`n`n"
 	getPartitions
+	"`n`n`n"
 	getVolumes
+	"`n`n`n"
 	getDisks
+	"`n`n`n"
 	getInstalledDrivers
+	"`n`n`n"
 	getHiddenFiles
+	"`n`n`n"
 	getServices
+	"`n`n`n"
 	getUsers
+	"`n`n`n"
 	getScheduledTasks
+	"`n`n`n"
 	findLNKFiles
+	"`n`n`n"
 	findOfficeDocs
+	"`n`n`n"
 	getStartupFolder
+	"`n`n`n"
 	getRegistryValues
 }
 
