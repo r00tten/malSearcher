@@ -95,7 +95,7 @@ function getRegistryValues() {
 			$j = $element.split(":")[1]
 			foreach($i in $users) {
 				$path = ("HKU:/" + $i + $j)
-				$path.PadLeft($path).length + 8)
+				$path.PadLeft(($path).length + 8)
 				Get-ItemProperty -Path $path
 				""
 			}
@@ -104,7 +104,7 @@ function getRegistryValues() {
 			$timeProviders = @(Get-ChildItem -Path $element -Name)
 				foreach($k in $timeProviders) {
 					$path = ($element + "\" + $k)
-					$path.PadLeft($path).length + 8)
+					$path.PadLeft(($path).length + 8)
 					Get-ItemProperty -Path $path
 					""
 				}
@@ -127,15 +127,15 @@ function getStartupFolder() {
 function findOfficeDocs() {
 	"[+] OFFICE DOCUMENTS"
 
-	"[-] .docx".PadLeft("[-] .docx").length + 8)
+	"[-] .docx".PadLeft(("[-] .docx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force	
 	""
 
-	"[-] .xlsx".PadLeft("[-] .xlsx").length + 8)
+	"[-] .xlsx".PadLeft(("[-] .xlsx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force	
 	""
 
-	"[-] .pptx".PadLeft("[-] .pptx").length + 8)
+	"[-] .pptx".PadLeft(("[-] .pptx").length + 8)
 	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
 }
 
@@ -161,11 +161,11 @@ function getScheduledTasks() {
 function getUsers() {
 	"[+] USERS"
 
-	"[-] Local Users".PadLeft("[-] Local Users").length + 8)
+	"[-] Local Users".PadLeft(("[-] Local Users").length + 8)
 	Get-LocalUser
 	""
 
-	"[-] AD Users".PadLeft("[-] AD Users").length + 8)
+	"[-] AD Users".PadLeft(("[-] AD Users").length + 8)
 	Get-ADUser
 }
 
@@ -220,11 +220,11 @@ function getTCPConnections() {
 function getBITS() {
 	"[+] BITS"
 
-	"[-] Bits Status".PadLeft("[-] Bits Status").length + 8)
+	"[-] Bits Status".PadLeft(("[-] Bits Status").length + 8)
 	sc.exe query BITS
 	""
 
-	"[-] Bits Jobs".PadLeft("[-] Bits Jobs").length + 8)
+	"[-] Bits Jobs".PadLeft(("[-] Bits Jobs").length + 8)
 	bitsadmin /list /allusers /verbose
 }
 
