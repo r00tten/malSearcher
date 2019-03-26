@@ -166,7 +166,7 @@ function getUsers() {
 	""
 
 	"[-] AD Users".PadLeft(("[-] AD Users").length + 8)
-	Get-ADUser
+	Get-ADUser -Filter *
 }
 
 function getServices() {
@@ -232,7 +232,7 @@ function getProcessesNModules() {
 	"[+] PROCESSES"
 
 	$processes = Get-Process
-	$processes
+	$processes | Format-Table
 	""
 	
 	"[+] MODULES"
