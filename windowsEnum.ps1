@@ -2,9 +2,9 @@
 # [X] Accounts
 # [X] AppCert DLLs
 # [X] AppInit DLLs
-# [ ] Bypass UAC
+# [X] Bypass UAC
 # [X] Authentication Packages
-# [ ] BITS 
+# [X] BITS 
 # [ ] Change Default File Association
 # [ ] File System Permissions Weakness
 # [X] Hidden Files and Directories
@@ -15,7 +15,7 @@
 # [X] Environment Variables
 # [X] Port Monitors
 # [X] Registry Run Keys
-# [ ] Startup Folders
+# [X] Startup Folders
 # [ ] HKLM\SOFTWARE\Microsoft\Cryptography\OID
 # [ ] HKLM\SOFTWARE\WOW6432Node\Microsoft\Cryptography\OID
 # [ ] HKLM\SOFTWARE\Microsoft\Cryptography\Providers\Trust
@@ -40,7 +40,7 @@
 # [ ] Allowed denied ports
 # [X] Office documents
 
-function registryValues() {
+function getRegistryValues() {
 	"[+] REGISTRY VALUES" 
 	
 	# Creating HKU drive
@@ -105,6 +105,14 @@ function registryValues() {
 	}
 }
 
+function getStartupFolder() {
+	$users = Get-ChildItem -Path C:\Users
+
+	foreach($i in $users) {
+		Get-ChildItem -Path ("C:\Users\" + $i + "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup") -Recurse -ErrorAction SilentlyContinue -Force 
+	}
+}
+
 function findOfficeDocs() {
 	"[+] OFFICE DOCUMENTS"
 
@@ -125,13 +133,13 @@ function findLNKFiles() {
 	$shell = New-Object -ComObject Wscript.Shell
 
 	foreach($i in $users) {
-			Get-ChildItem -Path ("C:\Users\" + $i + "\Desktop") -Filter *.lnk -Recurse -ErrorAction SilentlyContinue -Force | foreach-object {
-				"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
-			}
+		Get-ChildItem -Path ("C:\Users\" + $i + "\Desktop") -Filter *.lnk -Recurse -ErrorAction SilentlyContinue -Force | foreach-object {
+			"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
+		}
 	}
 }
 
-function scheduledTasks() {
+function getScheduledTasks() {
 	"[+] SCHEDULED TASKS"
 	Get-ScheduledTask
 }
@@ -179,11 +187,23 @@ function getClipboard() {
 
 function getTCPConnections() {
 	"[+] TCP CONNECTIONS"
+
 	Get-NetTCPConnection
+}
+
+function getBITS() {
+	"[+] BITS"
+
+	"[-] Bits Status"
+	sc.exe query BITS
+
+	"[-] Bits jobs"
+	bitsadmin /list /allusers /verbose
 }
 
 function getProcessesNModules() {
 	"[+] PROCESSES"
+
 	$processes = Get-Process
 	$processes
 	
@@ -197,16 +217,19 @@ function getProcessesNModules() {
 
 function getEnvironmentVariables() {
 	"[+] ENVIRONMENTVARIABLES"
+
 	Get-ChildItem Env:
 }
 
 function getHistory() {
 	"[+] HISTORY"
+
 	cat (PSReadlineOption).HistorySavePath
 }
 
 function getDrives() {
 	"[+] DRIVES"
+
 	Get-PSDrive
 }
 
@@ -227,3 +250,44 @@ function getDevices() {
 
 	Get-Pnodevice
 }
+
+function getNetAdaptConf() {
+	"[+] NETWORK ADAPTER CONFIG"
+
+	Get-WmiObject Win32_NetworkAdapterConfiguration
+}
+
+function getComSystemInfo() {
+	"[+] COMPUTER SYSTEM"
+
+	Get-WmiObject Win32_ComputerSystem
+}
+
+function scriptManager() {
+	getComSystemInfo
+	getNetAdaptConf
+	getDevices
+	getAVStatus
+	getDrives
+	getFirewallStatus
+	getEnvironmentVariables
+	getHistory
+	getProcessesNModules
+	getBITS
+	getTCPConnections
+	getClipboard
+	getPartitions
+	getVolumes
+	getDisks
+	getInstalledDrivers
+	getHiddenFiles
+	getServices
+	getUsers
+	getScheduledTasks
+	findLNKFiles
+	findOfficeDocs
+	getStartupFolder
+	getRegistryValues
+}
+
+scriptManager
