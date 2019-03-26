@@ -44,7 +44,7 @@ function getRegistryValues() {
 	"[+] REGISTRY VALUES" 
 	
 	# Creating HKU drive
-	New-PSDrive -PSProvider Registry -Name -HKU -Root HKEY_USERS
+	New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
 
 	$users = @(Get-ChildItem -Path HKU:/ -Name)
 
@@ -91,13 +91,17 @@ function getRegistryValues() {
 			# Converting HKCU keys to HKU
 			$j = $element.split(":")[1]
 			foreach($i in $users) {
-				Get-ItemProperty -Path ("HKU:/" + $i + $j)
+				$path = ("HKU:/" + $i + $j)
+				"`t`t" + $path
+				Get-ItemProperty -Path $path
 			}
 		} elseif(($element | Select-String -Pattern "TimeProviders") -ne "") {
 			# Get all sub-TimeProviders
 			$timeProviders = @(Get-ChildItem -Path $element -Name)
 				foreach($k in $timeProviders) {
-					Get-ItemProperty -Path ($element + "\" + $k)
+					$path = ($element + "\" + $k)
+					"`t`t" + $path
+					Get-ItemProperty -Path $path
 				}
 		} else {
 			Get-ItemProperty -Path $element
@@ -106,6 +110,8 @@ function getRegistryValues() {
 }
 
 function getStartupFolder() {
+	"[+] STARTUP FOLDER"
+
 	$users = Get-ChildItem -Path C:\Users
 
 	foreach($i in $users) {
@@ -141,11 +147,13 @@ function findLNKFiles() {
 
 function getScheduledTasks() {
 	"[+] SCHEDULED TASKS"
+
 	Get-ScheduledTask
 }
 
 function getUsers() {
 	"[+] USERS"
+
 	"`t[-] Local Users"
 	Get-LocalUser
 
@@ -155,33 +163,43 @@ function getUsers() {
 
 function getServices() {
 	"[+] SERVICES"
+
 	Get-Service
 }
 
 function getHiddenFiles() {
 	"[+] HIDDEN FILES"
+
 	Get-ChildItem -Hidden -Recurse -Force
 }
 
 function getInstalledDrivers() {
 	"[+] INSTALLED DRIVERS"
+
 	Get-WindowsDriver –Online -All
 }
 
 function getDisks() {
+	"[+] DISKS"
+
 	Get-Disk
 }
 
 function getVolumes() {
+	"[+] VOLUMES"
+
 	Get-Volume
 }
 
 function getPartitions() {
+	"[+] PARTITIONS"
+
 	Get-Partition
 }
 
 function getClipboard() {
 	"[+] CLIPBOARD"
+
 	Get-Clipboard -Raw
 }
 
@@ -263,7 +281,20 @@ function getComSystemInfo() {
 	Get-WmiObject Win32_ComputerSystem
 }
 
+function banner() {
+    "             ___   ___  _   _             "
+    "            / _ \ / _ \| | | |            "
+    "       _ __| | | | | | | |_| |_ ___ _ __  "
+    "      | '__| | | | | | | __| __/ _ \ '_ \ "
+    "      | |  | |_| | |_| | |_| ||  __/ | | |"
+    "      |_|   \___/ \___/ \__|\__\___|_| |_|"
+    ""
+    "            MalSearcher by Mert Degirmenci"
+    '___________________________________________________'
+}
+
 function scriptManager() {
+	banner
 	getComSystemInfo
 	getNetAdaptConf
 	getDevices
