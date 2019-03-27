@@ -44,10 +44,7 @@ function getRegistryValues() {
 	"[+] REGISTRY VALUES" 
 	
 	# Creating HKU drive
-	New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS
-	""
-	""
-	""
+	New-PSDrive -PSProvider Registry -Name HKU -Root HKEY_USERS | Out-Null
 
 	$users = @(Get-ChildItem -Path HKU:/ -Name)
 
@@ -289,6 +286,34 @@ function getComSystemInfo() {
 	"[+] COMPUTER SYSTEM"
 
 	Get-WmiObject Win32_ComputerSystem
+	""
+
+	[Version](Get-Item -Path "$env:windir\System32\kernel32.dll").VersionInfo.ProductVersion
+}
+
+function system32FolderCheck() {
+	"[+] SYTEM32 FILES HASHES"
+
+	$algorithm = [Security.Cryptography.HashAlgorithm]::Create("SHA256")
+    
+
+#    foreach($i in $array) { 
+#        if($i -eq $hash) { 
+#            $check = 1; 
+#            break 
+#        } 
+#    } 
+#    if($check -eq 1) { 
+#        $hash 
+#    } 
+
+	Get-ChildItem -Path $env:windir\system32 | foreach { 
+        $path = $env:windir + "\system32\" + $_.Name 
+        $fileBytes = [io.File]::ReadAllBytes($path) 
+        $bytes = $algorithm.ComputeHash($fileBytes) 
+        $hash = -Join ($bytes | foreach {"0:x2"} -f $_) 
+        $hash
+    } 
 }
 
 function banner() {
