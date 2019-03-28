@@ -336,7 +336,8 @@ function system32SignatureCheck() {
 	"[+] SYSTEM32 SIGNATURE CHECK"
 
 	Get-ChildItem -Path $env:windir\System32 | foreach {
-		$status = Get-AuthenticodeSignature $_
+		$path = ($env:windir + "\System32\" + $_)
+		$status = Get-AuthenticodeSignature $path
 		if($status.Status -ne "valid") {
 			$status
 		}
