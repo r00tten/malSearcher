@@ -148,7 +148,7 @@ function findLNKFiles() {
 
 	foreach($i in $users) {
 		Get-ChildItem -Path ("C:\Users\" + $i + "\Desktop") -Filter *.lnk -Recurse -ErrorAction SilentlyContinue -Force | foreach-object {
-			"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
+				"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
 		}
 	}
 }
@@ -326,7 +326,7 @@ function system32FolderCheck() {
 	Get-ChildItem -Path $env:windir\system32 | foreach { 
         $path = $env:windir + "\system32\" + $_.Name 
 		$sha256 = New-Object -TypeName System.Security.Cryptography.SHA256CryptoServiceProvider
-		$hash = [System.BitConverter]::ToString($sha256.ComputeHash([System.IO.File]::ReadAllBytes($path))
+		$hash = [System.BitConverter]::ToString($sha256.ComputeHash([System.IO.File]::ReadAllBytes($path)))
 		$hash + "          -----          " + $path
     } 
 }
