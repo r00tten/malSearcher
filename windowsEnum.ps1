@@ -35,7 +35,7 @@
 # [X] Loaded modules by processes
 # [X] Powershell history
 # [X] Devices(ethernet, cd, wireless vs.)
-# [ ] System32 hash check
+# [X] System32 hash check
 # [X] AV, firewall condition
 # [ ] Allowed denied ports
 # [X] Office documents
