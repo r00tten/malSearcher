@@ -327,7 +327,7 @@ function system32FolderCheck() {
         $path = $env:windir + "\system32\" + $_.Name 
 		$sha256 = New-Object -TypeName System.Security.Cryptography.SHA256CryptoServiceProvider
 		$hash = [System.BitConverter]::ToString($sha256.ComputeHash([System.IO.File]::ReadAllBytes($path))
-		$hash
+		$hash + "          -----          " + $path
     } 
 }
 
