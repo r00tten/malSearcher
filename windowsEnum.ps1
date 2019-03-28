@@ -153,14 +153,14 @@ function findLNKFiles() {
 
 function getTmpFolder() {
 	"[+] TMP FOLDER" 
-    
-    	Get-ChildItem -Path $env:temp
+
+	Get-ChildItem -Path $env:temp
 }
 
 function getAPPDATAFolder() {
-    	"[+] APPDATA FOLDER" 
+	"[+] APPDATA FOLDER" 
 
-    	Get-ChildItem -Path $env:appdata
+	Get-ChildItem -Path $env:appdata
 }
 
 function getScheduledTasks() {
@@ -392,9 +392,9 @@ function scriptManager() {
 	"`n`n`n"
 	getHiddenFiles
 	"`n`n`n"
-    	getTmpFolder
+	getTmpFolder
 	"`n`n`n"
-    	getAPPDATAFolder
+	getAPPDATAFolder
 	"`n`n`n"
 	getRegistryValues
 }
