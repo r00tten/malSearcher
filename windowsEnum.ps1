@@ -36,11 +36,13 @@
 # [X] Powershell history
 # [X] Devices(ethernet, cd, wireless vs.)
 # [X] System32 hash check
+# [X] System32 signature check
 # [X] AV, firewall condition
 # [ ] Allowed denied ports
 # [X] Office documents
 # [X] tmp Folder
 # [X] appdata
+# [ ] Certificates
 
 function getRegistryValues() {
 	"[+] REGISTRY VALUES" 
@@ -330,6 +332,17 @@ function system32FolderCheck() {
     } 
 }
 
+function system32SignatureCheck() {
+	"[+] SYSTEM32 SIGNATURE CHECK"
+
+	Get-ChildItem -Path $env:windir\System32 | foreach {
+		$status = Get-AuthenticodeSignature $_
+		if($status.Status -ne "valid") {
+			$status
+		}
+	}
+}
+
 function banner() {
 	""
     "             ___   ___  _   _             "
@@ -397,6 +410,11 @@ function scriptManager() {
 	getAPPDATAFolder
 	"`n`n`n"
 	getRegistryValues
+	"`n`n`n"
+	system32SignatureCheck
+	"`n`n`n"
+	system32FolderCheck
+	"`n`n`n"
 }
 
 scriptManager
