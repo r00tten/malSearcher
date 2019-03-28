@@ -325,10 +325,9 @@ function system32FolderCheck() {
 
 	Get-ChildItem -Path $env:windir\system32 | foreach { 
         $path = $env:windir + "\system32\" + $_.Name 
-        $fileBytes = [io.File]::ReadAllBytes($path) 
-        $bytes = $algorithm.ComputeHash($fileBytes) 
-        $hash = -Join ($bytes | foreach {"0:x2"} -f $_) 
-        $hash
+		$sha256 = New-Object -TypeName System.Security.Cryptography.SHA256CryptoServiceProvider
+		$hash = [System.BitConverter]::ToString($sha256.ComputeHash([System.IO.File]::ReadAllBytes($path))
+		$hash
     } 
 }
 
@@ -349,7 +348,7 @@ function banner() {
     "             ___   ___  _   _             "
     "            / _ \ / _ \| | | |            "
     "       _ __| | | | | | | |_| |_ ___ _ __  "
-    "      | '__| | | | | | | __| __/ _ \ '_ \ "
+    "      | ')__| | | | | | | __| __/ _ \ '_ \ "
     "      | |  | |_| | |_| | |_| ||  __/ | | |"
     "      |_|   \___/ \___/ \__|\__\___|_| |_|"
     ""
