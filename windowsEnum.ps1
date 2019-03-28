@@ -39,6 +39,8 @@
 # [X] AV, firewall condition
 # [ ] Allowed denied ports
 # [X] Office documents
+# [X] tmp Folder
+# [X] appdata
 
 function getRegistryValues() {
 	"[+] REGISTRY VALUES" 
@@ -147,6 +149,18 @@ function findLNKFiles() {
 			"[-] " + "C:\Users\" + $i + "\Desktop"; $target = ("C:\Users\" + $i + "\Desktop\" + $_); ($target + "          -----          " + $shell.CreateShortcut($target).TargetPath) 
 		}
 	}
+}
+
+function getTmpFolder() {
+	"[+] TMP FOLDER" 
+    
+    	Get-ChildItem -Path $env:temp
+}
+
+function getAPPDATAFolder() {
+    	"[+] APPDATA FOLDER" 
+
+    	Get-ChildItem -Path $env:appdata
 }
 
 function getScheduledTasks() {
@@ -364,8 +378,6 @@ function scriptManager() {
 	"`n`n`n"
 	getInstalledDrivers
 	"`n`n`n"
-	getHiddenFiles
-	"`n`n`n"
 	getServices
 	"`n`n`n"
 	getUsers
@@ -377,6 +389,12 @@ function scriptManager() {
 	findOfficeDocs
 	"`n`n`n"
 	getStartupFolder
+	"`n`n`n"
+	getHiddenFiles
+	"`n`n`n"
+    	getTmpFolder
+	"`n`n`n"
+    	getAPPDATAFolder
 	"`n`n`n"
 	getRegistryValues
 }
