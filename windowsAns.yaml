@@ -1,0 +1,16 @@
+# First. copy the script file to target
+- win_copy:
+    # Target hosts
+    hosts: "{{ win_hosts }}"
+    # Local location of script
+    src: *source_location*/windowsEnum.ps1
+    dest: 'C:\temp\'
+    remote_src: no
+
+# Then run the corresponding script
+- name: Run the PowerShell Script
+    # Target hosts
+    hosts: "{{ win_hosts }}"
+    # It should redirect the output to a file
+    win_command: powershell.exe -ExecutionPolicy ByPass -noninteractive -File C:/temp/windowsEnum.ps1 > *output_location*
+
