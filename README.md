@@ -1,8 +1,8 @@
 # malSearcher
 Malware searcher on Windows and Linux machines
 
-## ToDo List(Windows)
-
+## ToDo List
+### Windows
 \# [X] Image File Execution Options<br/>
 \# [X] Accounts<br/>
 \# [X] AppCert DLLs<br/>
@@ -46,3 +46,39 @@ Malware searcher on Windows and Linux machines
 \# [X] Office documents<br/>
 \# [X] tmp Folder<br/>
 \# [X] appdata<br/>
+
+###Linux
+\# [X] .bash_profile .bashrc<br/>
+\# [X] Accounts<br/>
+\# [X] Hidden Files<br/>
+\# [X] Kernel Modules<br/>
+\# [X] Scheduled Task<br/>
+\# [X] Setuid Setgid<br/>
+\# [X] Trap<br/>
+\# [X] Sudo<br/>
+\# [X] Sudo Caching<br/>
+\# [X] History<br/>
+\# [X] Certificates<br/>
+\# [ ] Clipboard<br/>
+\# [X] Environment Variables<br/>
+\# [X] Active Connections<br/>
+\# [X] tmp Folder<br/>
+\# [X] Processes<br/>
+\# [X] Firewall status<br/>
+\# [X] Services<br/>
+\# [ ] Devices<br/>
+\# [ ] Disks<br/>
+\# [ ] Partitions<br/>
+\# [X] Mount<br/>
+\# [X] fstab<br/>
+\# [ ] Credentials in Files<br/>
+\# [X] SSH trusted keys<br/>
+\# [X] System Info<br/>
+\# [X] Network Info<br/>
+\# [X] Passwd & Shadow<br/>
+\# [X] ARP<br/>
+\# [X] Home folders<br/>
+\# [X] World writable files<br/>
+\# [X] Apps installed<br/>
+\# [X] Login history<br/>
+\# [X] Groups<br/>
