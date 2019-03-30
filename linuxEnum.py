@@ -72,13 +72,14 @@ def banner():
 def main():
     banner()
     print ('{}').format("[+] SYSTEM INFO")
-    executeCmd({0:'cat /etc/issue'}, 1)
-    print
-    executeCmd({0:'cat /proc/version'}, 1)
-    print
-    executeCmd({0:'hostname'}, 1)
-    print
-    executeCmd({0:'uname -a'}, 1)
+    print ((2 * 4 * ' ') + '{:}').format("[-] /etc/issue")
+    executeCmd({0:'cat /etc/issue'}, 3)
+    print ((2 * 4 * ' ') + '{:}').format("[-] /proc/version")
+    executeCmd({0:'cat /proc/version'}, 3)
+    print ((2 * 4 * ' ') + '{:}').format("[-] hostname")
+    executeCmd({0:'hostname'}, 3)
+    print ((2 * 4 * ' ') + '{:}').format("[-] uname -a")
+    executeCmd({0:'uname -a'}, 3)
 
     print ('{}').format("[+] NETWORK INFO")
     executeCmd({0:'ip a'}, 1)
