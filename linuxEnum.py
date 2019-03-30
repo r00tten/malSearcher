@@ -249,7 +249,7 @@ def main():
     executeCmd({0:"trap -l"}, 1)
 
     # https://github.com/sleventyeleven/linuxprivchecker/blob/master/linuxprivchecker.py
-    print ('{}').format("[+]CREDENTIALS IN FILES")
+    print ('{}').format("[+] CREDENTIALS IN FILES")
     print ((2 * 4 * ' ') + '{:}').format("[-] Config Files @ /etc")
     executeCmd({0:"find /etc -name '*.c*' 2>/dev/null | xargs -l10 egrep 'pwd|password' 2>/dev/null"}, 3)
     print ((2 * 4 * ' ') + '{:}').format("[-] Files @ /home")
