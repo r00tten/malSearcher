@@ -115,27 +115,32 @@ def main():
     stdout = os.popen("find /home -name *bashrc  2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
-        stdout = os.popen("cat " + i, 'r')
-        res = stdout.read().split('\n')
-        printOut(res, 2)
-        print 
+        if i != "":
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+            stdout = os.popen("cat " + i, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
+
     stdout = os.popen("find /home -name *bash_profile  2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
-        stdout = os.popen("cat " + i, 'r')
-        res = stdout.read().split('\n')
-        printOut(res, 2)
-        print 
+        if i != "":
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+            stdout = os.popen("cat " + i, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
+
     stdout = os.popen("find /home -name *profile  2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
-        stdout = os.popen("cat " + i, 'r')
-        res = stdout.read().split('\n')
-        printOut(res, 2)
-        print 
+        if i != "":
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+            stdout = os.popen("cat " + i, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
 
     print ('{}').format("[+] HIDDEN FILES")
     executeCmd({0:"find / -name '.*' -exec ls -ld {} \; 2>/dev/null"}, 1)
@@ -176,21 +181,23 @@ def main():
     stdout = os.popen("find /home -name *history  2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
-        stdout = os.popen("cat " + i, 'r')
-        res = stdout.read().split('\n')
-        printOut(res, 2)
-        print 
+        if i != "":
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+            stdout = os.popen("cat " + i, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
 
     print ('{}').format("[+] SSH TRUSTED KEYS")
     stdout = os.popen("find /home -name authorized_keys 2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
-        stdout = os.popen("cat " + i, 'r')
-        res = stdout.read().split('\n')
-        printOut(res, 2)
-        print 
+        if i != "":
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+            stdout = os.popen("cat " + i, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
 
     # https://unix.stackexchange.com/questions/97244/list-all-available-ssl-ca-certificates
     print ('{}').format("[+] CERTIFICATES")
