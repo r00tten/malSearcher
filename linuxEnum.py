@@ -21,7 +21,7 @@
 # [ ] Partitions
 # [X] Mount
 # [X] fstab
-# [ ] Credentials in Files
+# [X] Credentials in Files
 # [X] SSH trusted keys
 # [X] System Info
 # [X] Network Info
@@ -247,6 +247,13 @@ def main():
 
     print ('{}').format("[+] TRAP")
     executeCmd({0:"trap -l"}, 1)
+
+    # https://github.com/sleventyeleven/linuxprivchecker/blob/master/linuxprivchecker.py
+    print ('{}').format("[+]CREDENTIALS IN FILES")
+    print ((2 * 4 * ' ') + '{:}').format("[-] Config Files @ /etc")
+    executeCmd({0:"find /etc -name '*.c*' 2>/dev/null | xargs -l10 egrep 'pwd|password' 2>/dev/null"}, 3)
+    print ((2 * 4 * ' ') + '{:}').format("[-] Files @ /home")
+    executeCmd({0:"find /home  2>/dev/null | xargs -l10 egrep 'pwd|password' 2>/dev/null"}, 3)
 
 #    print ('{}').format("[+] HASHES")
 #    executeCmd({0:"find / -exec md5sum {} \;"})
