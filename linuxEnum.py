@@ -1,21 +1,21 @@
 # [X] .bash_profile .bashrc
 # [X] Accounts
 # [X] Hidden Files
-# [ ] Kernel Modules
+# [X] Kernel Modules
 # [X] Scheduled Task
 # [X] Setuid Setgid
-# [ ] Trap
+# [X] Trap
 # [X] Sudo
 # [X] Sudo Caching
 # [X] History
-# [ ] Certificates
+# [X] Certificates
 # [ ] Clipboard
 # [X] Environment Variables
 # [X] Active Connections
 # [X] tmp Folder
 # [X] Processes
-# [ ] Firewall status
-# [ ] Services
+# [X] Firewall status
+# [X] Services
 # [ ] Devices
 # [ ] Disks
 # [ ] Partitions
@@ -26,10 +26,10 @@
 # [X] System Info
 # [X] Network Info
 # [X] Passwd & Shadow
-# [ ] ARP
+# [X] ARP
 # [X] Home folders
 # [X] World writable files
-# [ ] Apps installed
+# [X] Apps installed
 # [X] Login history
 # [X] Groups
 
@@ -137,6 +137,14 @@ def main():
         res = stdout.read().split('\n')
         printOut(res, 2)
         print 
+    stdout = os.popen("find /home -name *profile  2>/dev/null", 'r')
+    res = stdout.read().split('\n')
+    for i in res:
+        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+        stdout = os.popen("cat " + i, 'r')
+        res = stdout.read().split('\n')
+        printOut(res, 2)
+        print 
 
     print 
     print 
@@ -219,6 +227,12 @@ def main():
         printOut(res, 2)
         print 
 
+    # https://unix.stackexchange.com/questions/97244/list-all-available-ssl-ca-certificates
+    print 
+    print 
+    print ('{}').format("[+] CERTIFICATES")
+    executeCmd("awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt", 'r')
+
     print 
     print 
     print ('{}').format("[+] SCHEDULED JOBS")
@@ -235,6 +249,52 @@ def main():
             res = stdout.read().split('\n')
             printOut(res, 2)
             print 
+
+    print 
+    print 
+    print ('{}').format("[+] FIREWALL")
+    print ((2 * 4 * ' ') + '{:}').format("[-] Firewall Status")
+    executeCmd("systemctl status iptables", 'r')
+    print
+    iptables = {'filter', 'nat', 'mangle', 'raw', 'security'}
+    for i in iptables:
+        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+        stdout = os.popen("iptables -vL -t" + i, 'r')
+        res = stdout.read().split('\n')
+        printOut(res, 2)
+        print 
+
+    print 
+    print 
+    print ('{}').format("[+] APPS INSTALLED")
+    executeCmd('apt list --installed')
+    print
+    executeCmd('dpkg -l')
+
+    print 
+    print 
+    print ('{}').format("[+] SERVICES")
+    executeCmd('systemctl -l --type service --all')
+
+    print 
+    print 
+    print ('{}').format("[+] KERNEL MODULES")
+    executeCmd('lsmod')
+
+    print 
+    print 
+    print ('{}').format("[+] ARP")
+    executeCmd('arp -a')
+
+    print 
+    print 
+    print ('{}').format("[+] TRAP")
+    executeCmd('trap -l')
+
+#    print 
+#    print 
+#    print ('{}').format("[+] HASHES")
+#    executeCmd("find / -exec md5sum {} \;", 'r')
 
 if __name__ == "__main__":
     main()
