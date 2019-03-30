@@ -39,8 +39,6 @@ import os
 
 def executeCmd(cmd, level):
     if cmd is not "":
-        print
-        print
         stdout = os.popen(cmd[0], 'r')
         res = stdout.read().split('\n')
         printOut(res, level)
@@ -55,7 +53,8 @@ def printOut(out, level):
     if out is not '':
         for i in out:
             print ((level * 4 * ' ') + '{:}').format(i)
-
+        print
+        print
 
 def banner():
     print
@@ -224,8 +223,8 @@ def main():
     executeCmd({0:"systemctl status iptables"}, 2)
     print
     iptables = {0:'filter', 1:'nat', 2:'mangle', 3:'raw', 4:'security'}
-    for i in iptables:
-        print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
+    for i in range(len(iptables)):
+        print ((2 * 4 * ' ') + '{:}').format("[-] " + str(iptables[i]))
         stdout = os.popen("iptables -vL -t" + i, 'r')
         res = stdout.read().split('\n')
         printOut(res, 3)
