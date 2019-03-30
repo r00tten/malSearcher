@@ -225,7 +225,7 @@ def main():
     iptables = {0:'filter', 1:'nat', 2:'mangle', 3:'raw', 4:'security'}
     for i in range(len(iptables)):
         print ((2 * 4 * ' ') + '{:}').format("[-] " + str(iptables[i]))
-        stdout = os.popen("iptables -vL -t" + i, 'r')
+        stdout = os.popen("iptables -vL -t " + str(iptables[i]), 'r')
         res = stdout.read().split('\n')
         printOut(res, 3)
         print 
