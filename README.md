@@ -47,7 +47,7 @@ Malware searcher on Windows and Linux machines
 \# [X] tmp Folder<br/>
 \# [X] appdata<br/>
 
-###Linux
+### Linux
 \# [X] .bash_profile .bashrc<br/>
 \# [X] Accounts<br/>
 \# [X] Hidden Files<br/>
