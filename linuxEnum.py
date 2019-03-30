@@ -37,11 +37,19 @@
 
 import os
 
-def executeCmd(cmd):
+def executeCmd(cmd, level):
     if cmd is not "":
-        stdout = os.popen(cmd, 'r')
+        print
+        print
+        stdout = os.popen(cmd[0], 'r')
         res = stdout.read().split('\n')
-        printOut(res, 1)
+        printOut(res, level)
+#        else:
+#            for i in res:
+#                innerOut = os.popen(cmd[1] + " " + i, 'r')
+#                innerRes = stdout.read().split('\n')
+#                printOut(innerRes, level)
+
 
 def printOut(out, level):
     if out is not '':
@@ -64,62 +72,45 @@ def banner():
 
 def main():
     banner()
-    print 
-    print 
     print ('{}').format("[+] SYSTEM INFO")
-    executeCmd('cat /etc/issue')
+    executeCmd({0:'cat /etc/issue'}, 1)
     print
-    executeCmd('cat /proc/version')
+    executeCmd({0:'cat /proc/version'}, 1)
     print
-    executeCmd('hostname')
+    executeCmd({0:'hostname'}, 1)
     print
-    executeCmd('uname -a')
+    executeCmd({0:'uname -a'}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] NETWORK INFO")
-    executeCmd('ip a')
+    executeCmd({0:'ip a'}, 1)
     print
-    executeCmd('ifconfig -a')
+    executeCmd({0:'ifconfig -a'}, 1)
     print
-    executeCmd('route')
+    executeCmd({0:'route'}, 1)
     print
-    executeCmd('netstat -antup')
+    executeCmd({0:'netstat -antup'}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] MOUNT")
-    executeCmd('mount')
+    executeCmd({0:'mount'}, 1)
 
-
-    print 
-    print 
     print ('{}').format("[+] FSTAB")
-    executeCmd('cat /etc/fstab')
+    executeCmd({0:'cat /etc/fstab'}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] PASSWD")
-    executeCmd('cat /etc/passwd')
+    executeCmd({0:'cat /etc/passwd'}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] GROUPS")
-    executeCmd('cat /etc/group')
+    executeCmd({0:'cat /etc/group'}, 1)
  
-    print 
-    print 
     print ('{}').format("[+] SHADOW")
-    executeCmd('cat /etc/shadow')
+    executeCmd({0:'cat /etc/shadow'}, 1)
  
-    print 
-    print 
     print ('{}').format("[+] BASH CONFIG FILES")
     print ((2 * 4 * ' ') + '{:}').format("[-] /etc/profile")
-    executeCmd('cat /etc/profile')
+    executeCmd({0:'cat /etc/profile'}, 2)
     print
     print ((2 * 4 * ' ') + '{:}').format("[-] /etc/bash.bashrc")
-    executeCmd('cat /etc/bash.bashrc')
+    executeCmd({0:'cat /etc/bash.bashrc'}, 2)
     print
     stdout = os.popen("find /home -name *bashrc  2>/dev/null", 'r')
     res = stdout.read().split('\n')
@@ -146,65 +137,41 @@ def main():
         printOut(res, 2)
         print 
 
-    print 
-    print 
     print ('{}').format("[+] HIDDEN FILES")
-    executeCmd("find / -name '.*' -exec ls -ld {} \; 2>/dev/null")
+    executeCmd({0:"find / -name '.*' -exec ls -ld {} \; 2>/dev/null"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] LOGIN HISTORY")
-    executeCmd('w')
+    executeCmd({0:'w'}, 1)
     print
-    executeCmd('last')
+    executeCmd({0:"last"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] SUDOERS")
-    executeCmd('cat /etc/sudoers')
+    executeCmd({0:"cat /etc/sudoers"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] SUDO CACHING")
-    executeCmd("find /var/db/sudo -exec ls -ld {} \; 2>/dev/null")
+    executeCmd({0:"find /var/db/sudo -exec ls -ld {} \; 2>/dev/null"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] HOME FOLDERS")
-    executeCmd('ls -lA /home')
+    executeCmd({0:"ls -lA /home"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] ENVIRONMENT VARIABLE")
-    executeCmd('env')
+    executeCmd({0:"env"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] TMP FOLDER")
-    executeCmd('ls -lA /tmp')
+    executeCmd({0:"ls -lA /tmp"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] PROCESSES")
-    executeCmd('ps aux')
+    executeCmd({0:"ps aux"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] WORLD WRITABLE FOLDERS")
-    executeCmd("find / \( -wholename '/home/homedir*' -prune \) -o \( -type d -perm -0002 \) -exec ls -ld '{}' ';' 2>/dev/null | grep root")
+    executeCmd({0:"find / \( -wholename '/home/homedir*' -prune \) -o \( -type d -perm -0002 \) -exec ls -ld '{}' ';' 2>/dev/null | grep root"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] WORLD WRITABLE FILES")
-    executeCmd("find / \( -wholename '/home/homedir*' -prune \) -o \( -type d -perm -0002 \) -exec ls -ld '{}' ';' 2>/dev/null | grep -v root")
+    executeCmd({0:"find / \( -wholename '/home/homedir*' -prune \) -o \( -type d -perm -0002 \) -exec ls -ld '{}' ';' 2>/dev/null | grep -v root"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] SUID & SGID")
-    executeCmd("find / \( -perm -2000 -o -perm -4000 \) -exec ls -ld {} \; 2>/dev/null")
+    executeCmd({0:"find / \( -perm -2000 -o -perm -4000 \) -exec ls -ld {} \; 2>/dev/null"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] HISTORY FILES")
     stdout = os.popen("find /home -name *history  2>/dev/null", 'r')
     res = stdout.read().split('\n')
@@ -215,8 +182,6 @@ def main():
         printOut(res, 2)
         print 
 
-    print 
-    print 
     print ('{}').format("[+] SSH TRUSTED KEYS")
     stdout = os.popen("find /home -name authorized_keys 2>/dev/null", 'r')
     res = stdout.read().split('\n')
@@ -228,20 +193,15 @@ def main():
         print 
 
     # https://unix.stackexchange.com/questions/97244/list-all-available-ssl-ca-certificates
-    print 
-    print 
     print ('{}').format("[+] CERTIFICATES")
-    executeCmd("awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt", 'r')
+    executeCmd({0:"awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt"}, 'r', 1)
 
-    print 
-    print 
     print ('{}').format("[+] SCHEDULED JOBS")
     stdout = os.popen("find /etc -name cron* 2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
         stdout = os.popen("ls " + i, 'r')
         res = stdout.read().split('\n')
-        
         for j in res:
             path = i + "/" + j
             print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
@@ -250,13 +210,11 @@ def main():
             printOut(res, 2)
             print 
 
-    print 
-    print 
     print ('{}').format("[+] FIREWALL")
     print ((2 * 4 * ' ') + '{:}').format("[-] Firewall Status")
-    executeCmd("systemctl status iptables", 'r')
+    executeCmd({0:"systemctl status iptables"}, 1)
     print
-    iptables = {'filter', 'nat', 'mangle', 'raw', 'security'}
+    iptables = {0:'filter', 1:'nat', 2:'mangle', 3:'raw', 4:'security'}
     for i in iptables:
         print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
         stdout = os.popen("iptables -vL -t" + i, 'r')
@@ -264,37 +222,25 @@ def main():
         printOut(res, 2)
         print 
 
-    print 
-    print 
     print ('{}').format("[+] APPS INSTALLED")
-    executeCmd('apt list --installed')
+    executeCmd({0:"apt list --installed"}, 1)
     print
-    executeCmd('dpkg -l')
+    executeCmd({0:"dpkg -l"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] SERVICES")
-    executeCmd('systemctl -l --type service --all')
+    executeCmd({0:"systemctl -l --type service --all"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] KERNEL MODULES")
-    executeCmd('lsmod')
+    executeCmd({0:"lsmod"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] ARP")
-    executeCmd('arp -a')
+    executeCmd({0:"arp -a"}, 1)
 
-    print 
-    print 
     print ('{}').format("[+] TRAP")
-    executeCmd('trap -l')
+    executeCmd({0:"trap -l"}, 1)
 
-#    print 
-#    print 
 #    print ('{}').format("[+] HASHES")
-#    executeCmd("find / -exec md5sum {} \;", 'r')
+#    executeCmd({0:"find / -exec md5sum {} \;"})
 
 if __name__ == "__main__":
     main()
