@@ -107,10 +107,10 @@ def main():
  
     print ('{}').format("[+] BASH CONFIG FILES")
     print ((2 * 4 * ' ') + '{:}').format("[-] /etc/profile")
-    executeCmd({0:'cat /etc/profile'}, 2)
+    executeCmd({0:'cat /etc/profile'}, 3)
     print
     print ((2 * 4 * ' ') + '{:}').format("[-] /etc/bash.bashrc")
-    executeCmd({0:'cat /etc/bash.bashrc'}, 2)
+    executeCmd({0:'cat /etc/bash.bashrc'}, 3)
     print
     stdout = os.popen("find /home -name *bashrc  2>/dev/null", 'r')
     res = stdout.read().split('\n')
@@ -119,7 +119,7 @@ def main():
             print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
             stdout = os.popen("cat " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
+            printOut(res, 3)
             print 
 
     stdout = os.popen("find /home -name *bash_profile  2>/dev/null", 'r')
@@ -129,7 +129,7 @@ def main():
             print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
             stdout = os.popen("cat " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
+            printOut(res, 3)
             print 
 
     stdout = os.popen("find /home -name *profile  2>/dev/null", 'r')
@@ -139,7 +139,7 @@ def main():
             print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
             stdout = os.popen("cat " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
+            printOut(res, 3)
             print 
 
     print ('{}').format("[+] HIDDEN FILES")
@@ -185,7 +185,7 @@ def main():
             print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
             stdout = os.popen("cat " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
+            printOut(res, 3)
             print 
 
     print ('{}').format("[+] SSH TRUSTED KEYS")
@@ -196,37 +196,39 @@ def main():
             print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
             stdout = os.popen("cat " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
+            printOut(res, 3)
             print 
 
     # https://unix.stackexchange.com/questions/97244/list-all-available-ssl-ca-certificates
     print ('{}').format("[+] CERTIFICATES")
-    executeCmd({0:"awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt"}, 'r', 1)
+    executeCmd({0:"awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < /etc/ssl/certs/ca-certificates.crt"}, 1)
 
     print ('{}').format("[+] SCHEDULED JOBS")
     stdout = os.popen("find /etc -name cron* 2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
-        stdout = os.popen("ls " + i, 'r')
-        res = stdout.read().split('\n')
-        for j in res:
-            path = i + "/" + j
-            print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
-            stdout = os.popen("cat " + path, 'r')
+        if i != "":
+            stdout = os.popen("ls " + i, 'r')
             res = stdout.read().split('\n')
-            printOut(res, 2)
-            print 
+            for j in res:
+                if j != "":
+                    path = i + "/" + j
+                    print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
+                    stdout = os.popen("cat " + path, 'r')
+                    res = stdout.read().split('\n')
+                    printOut(res, 2)
+                    print 
 
     print ('{}').format("[+] FIREWALL")
     print ((2 * 4 * ' ') + '{:}').format("[-] Firewall Status")
-    executeCmd({0:"systemctl status iptables"}, 1)
+    executeCmd({0:"systemctl status iptables"}, 2)
     print
     iptables = {0:'filter', 1:'nat', 2:'mangle', 3:'raw', 4:'security'}
     for i in iptables:
         print ((2 * 4 * ' ') + '{:}').format("[-] " + i)
         stdout = os.popen("iptables -vL -t" + i, 'r')
         res = stdout.read().split('\n')
-        printOut(res, 2)
+        printOut(res, 3)
         print 
 
     print ('{}').format("[+] APPS INSTALLED")
