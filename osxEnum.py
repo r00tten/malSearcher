@@ -83,8 +83,8 @@ def main():
     executeCmd({0:'ip a'}, 1)
     print
     executeCmd({0:'ifconfig -a'}, 1)
-    print
-    executeCmd({0:'route'}, 1)
+#    print
+#    executeCmd({0:'route'}, 1)
     print
     executeCmd({0:'netstat -ap tcp'}, 1)
     print
