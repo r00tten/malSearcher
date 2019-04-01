@@ -47,7 +47,7 @@ Malware searcher on Windows and Linux machines
 \# [X] tmp Folder<br/>
 \# [X] appdata<br/>
 
-### Linux
+###Linux
 \# [X] .bash_profile .bashrc<br/>
 \# [X] Accounts<br/>
 \# [X] Hidden Files<br/>
@@ -71,7 +71,7 @@ Malware searcher on Windows and Linux machines
 \# [ ] Partitions<br/>
 \# [X] Mount<br/>
 \# [X] fstab<br/>
-\# [ ] Credentials in Files<br/>
+\# [X] Credentials in Files<br/>
 \# [X] SSH trusted keys<br/>
 \# [X] System Info<br/>
 \# [X] Network Info<br/>
@@ -82,3 +82,40 @@ Malware searcher on Windows and Linux machines
 \# [X] Apps installed<br/>
 \# [X] Login history<br/>
 \# [X] Groups<br/>
+
+### OSX
+\# [X] .bash_profile .bashrc<br/>
+\# [X] Accounts<br/>
+\# [ ] Hidden Files<br/>
+\# [X] Kernel Modules<br/>
+\# [X] Scheduled Task<br/>
+\# [X] Setuid Setgid<br/>
+\# [ ] Trap<br/>
+\# [X] Sudo<br/>
+\# [X] Sudo Caching<br/>
+\# [X] History<br/>
+\# [X] Certificates<br/>
+\# [X] Environment Variables<br/>
+\# [X] Active Connections<br/>
+\# [X] tmp Folder<br/>
+\# [X] Processes<br/>
+\# [X] Services<br/>
+\# [ ] Devices<br/>
+\# [ ] Disks<br/>
+\# [ ] Partitions<br/>
+\# [X] Mount<br/>
+\# [X] fstab<br/>
+\# [X] Credentials in Files<br/>
+\# [X] SSH trusted keys<br/>
+\# [X] System Info<br/>
+\# [X] Network Info<br/>
+\# [X] Passwd & Shadow<br/>
+\# [X] ARP<br/>
+\# [X] Home folders<br/>
+\# [ ] World writable files<br/>
+\# [X] Apps installed<br/>
+\# [X] Login history<br/>
+\# [X] Groups<br/>
+\# [X] Rc.common<br/>
+\# [X] Launchctl<br/>
+\# [X] Startup Item<br/>
