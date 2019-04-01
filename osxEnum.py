@@ -30,6 +30,9 @@
 # [X] Apps installed
 # [X] Login history
 # [X] Groups
+# [X] Rc.common
+# [X] Launchctl
+# [X] Startup Item
 
 #!/usr/bin/python
 
@@ -85,6 +88,8 @@ def main():
     executeCmd({0:'ifconfig -a'}, 1)
 #    print
 #    executeCmd({0:'route'}, 1)
+    print
+    executeCmd({0:'netstat -nr'}, 1)
     print
     executeCmd({0:'netstat -ap tcp'}, 1)
     print
@@ -214,6 +219,17 @@ def main():
     executeCmd({0:"security find-certificate -a"}, 1)
 
     print ('{}').format("[+] SCHEDULED JOBS")
+    print ((2 * 4 * ' ') + '{:}').format("[-] /System/Library/LaunchDaemons")
+    stdout = os.popen("ls /System/Library/LaunchDaemons/", 'r')
+    res = stdout.read().split('\n')
+    for i in res:
+        if i != "":
+            path = "/System/Library/LaunchDaemons" + i
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
+            stdout = os.popen("cat " + path, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 3)
+            print 
     print ((2 * 4 * ' ') + '{:}').format("[-] /Library/LaunchDaemons/")
     stdout = os.popen("ls /Library/LaunchDaemons/", 'r')
     res = stdout.read().split('\n')
@@ -237,7 +253,7 @@ def main():
             printOut(res, 3)
             print 
     print ((2 * 4 * ' ') + '{:}').format("[-] LaunchAgents Under /Users")
-    stdout = os.popen("find /Users/ -name LaunchAgents -type d 2>/dev/null", 'r')
+    stdout = os.popen("find /users/ -name launchagents -type d 2>/dev/null", 'r')
     res = stdout.read().split('\n')
     for i in res:
         if i != "":
@@ -251,6 +267,43 @@ def main():
                     res = stdout.read().split('\n')
                     printOut(res, 3)
                     print 
+
+#    print ('{}').format("[+] LOGIN ITEM")
+#    stdout = os.popen("ls /Users", 'r')
+#    res = stdout.read().split('\n')
+#    for i in res:
+#        if i != "":
+#            path = "/Users/" + i + "/Library/Preferences/"
+#            print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
+#            stdout = os.popen("ls " + path, 'r')
+#            res = stdout.read().split('\n')
+#            for j in res:
+#                if j != "":
+#                    pathCat = path + j
+#                    print ((2 * 4 * ' ') + '{:}').format("[-] " + pathCat)
+#                    stdout = os.popen("cat " + pathCat, 'r')
+#                    res = stdout.read().split('\n')
+#                    print res
+#                    printOut(res, 3)
+#                    print 
+
+    print ('{}').format("[+] LAUNCHCTL")
+    executeCmd({0:"launchctl list"}, 1)
+
+    print ('{}').format("[+] STARTUP ITEM")
+    stdout = os.popen("ls /Library/StartupItems", 'r')
+    res = stdout.read().split('\n')
+    for i in res:
+        if i != "":
+            path = "/Library/StartupItems" + i
+            print ((2 * 4 * ' ') + '{:}').format("[-] " + path)
+            stdout = os.popen("cat " + path, 'r')
+            res = stdout.read().split('\n')
+            printOut(res, 2)
+            print 
+
+    print ('{}').format("[+] RC.COMMON")
+    executeCmd({0:"cat /etc/rc.common"}, 1)
 
     print ('{}').format("[+] FIREWALL")
     executeCmd({0:"pfctl -s all"}, 1)
