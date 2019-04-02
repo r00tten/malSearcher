@@ -89,6 +89,8 @@ def main():
     executeCmd({0:'route'}, 1)
     print
     executeCmd({0:'netstat -antup'}, 1)
+    print
+    executeCmd({0:'ss'}, 1)
 
     print(('{}').format("[+] MOUNT"))
     executeCmd({0:'mount'}, 1)
