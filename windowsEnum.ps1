@@ -129,15 +129,15 @@ function findOfficeDocs() {
 	"[+] OFFICE DOCUMENTS"
 
 	"[-] .docx".PadLeft(("[-] .docx").length + 8)
-	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force	
+	Get-ChildItem -Path C:\ -Filter *.docx -Recurse -ErrorAction SilentlyContinue -Force | % { $_.FullName }
 	""
 
 	"[-] .xlsx".PadLeft(("[-] .xlsx").length + 8)
-	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force	
+	Get-ChildItem -Path C:\ -Filter *.xlsx -Recurse -ErrorAction SilentlyContinue -Force | % { $_.FullName }
 	""
 
 	"[-] .pptx".PadLeft(("[-] .pptx").length + 8)
-	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force	
+	Get-ChildItem -Path C:\ -Filter *.pptx -Recurse -ErrorAction SilentlyContinue -Force | % { $_.FullName }
 }
 
 function findLNKFiles() {
