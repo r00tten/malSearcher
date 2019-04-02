@@ -16,9 +16,9 @@
 # [X] Processes
 # [X] Firewall status
 # [X] Services
-# [ ] Devices
-# [ ] Disks
-# [ ] Partitions
+# [X] Devices
+# [X] Disks
+# [X] Partitions
 # [X] Mount
 # [X] fstab
 # [X] Credentials in Files
@@ -239,6 +239,15 @@ def main():
     print(('{}').format("[+] SERVICES"))
     executeCmd({0:"systemctl -l --type service --all"}, 1)
 
+    print(('{}').format("[+] DEVICE INFORMATION"))
+    executeCmd({0:"dmesg"}, 1)
+    
+    print(('{}').format("[+] DISKS"))
+    executeCmd({0:"df"}, 1)
+    
+    print(('{}').format("[+] PARTITIONS"))
+    executeCmd({0:"lsblk -o 'NAME,MAJ:MIN,RM,SIZE,RO,FSTYPE,MOUNTPOINT,UUID'"}, 1)
+    
     print(('{}').format("[+] KERNEL MODULES"))
     executeCmd({0:"lsmod"}, 1)
 
