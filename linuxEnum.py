@@ -16,7 +16,7 @@
 # [X] Processes
 # [X] Firewall status
 # [X] Services
-# [X] Devices
+# [ ] Devices
 # [X] Disks
 # [X] Partitions
 # [X] Mount
@@ -239,7 +239,7 @@ def main():
     print(('{}').format("[+] SERVICES"))
     executeCmd({0:"systemctl -l --type service --all"}, 1)
 
-    print(('{}').format("[+] DEVICE INFORMATION"))
+    print(('{}').format("[+] SYSTEM MESSAGE BUFFER"))
     executeCmd({0:"dmesg"}, 1)
     
     print(('{}').format("[+] DISKS"))
