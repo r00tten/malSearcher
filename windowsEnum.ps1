@@ -357,64 +357,36 @@ function banner() {
 }
 
 function scriptManager() {
-	banner
-	"`n`n`n"
-	getComSystemInfo
-	"`n`n`n"
-	getNetAdaptConf
-	"`n`n`n"
-	getDevices
-	"`n`n`n"
-	getAVStatus
-	"`n`n`n"
-	getDrives
-	"`n`n`n"
-	getFirewallStatus
-	"`n`n`n"
-	getEnvironmentVariables
-	"`n`n`n"
-	getHistory
-	"`n`n`n"
-	getProcessesNModules
-	"`n`n`n"
-	getBITS
-	"`n`n`n"
-	getTCPConnections
-	"`n`n`n"
-	getClipboard
-	"`n`n`n"
-	getPartitions
-	"`n`n`n"
-	getVolumes
-	"`n`n`n"
-	getDisks
-	"`n`n`n"
-	getInstalledDrivers
-	"`n`n`n"
-	getServices
-	"`n`n`n"
-	getUsers
-	"`n`n`n"
-	getScheduledTasks
-	"`n`n`n"
-	findLNKFiles
-	"`n`n`n"
-	findOfficeDocs
-	"`n`n`n"
-	getStartupFolder
-	"`n`n`n"
-	getHiddenFiles
-	"`n`n`n"
-	getTmpFolder
-	"`n`n`n"
-	getAPPDATAFolder
-	"`n`n`n"
-	getRegistryValues
-	"`n`n`n"
-	system32SignatureCheck
-	"`n`n`n"
-	system32FolderCheck
-	"`n`n`n"
+	$rapor = Join-Path -Path ('C:\\temp') -ChildPath "malSearcher.log" 
+	banner | Out-File -FilePath $rapor -Append
+	getComSystemInfo | Out-File -FilePath $rapor -Append
+	getNetAdaptConf | Out-File -FilePath $rapor -Append
+	getDevices | Out-File -FilePath $rapor -Append
+	getAVStatus | Out-File -FilePath $rapor -Append
+	getDrives | Out-File -FilePath $rapor -Append
+	getFirewallStatus | Out-File -FilePath $rapor -Append
+	getEnvironmentVariables | Out-File -FilePath $rapor -Append
+	getHistory | Out-File -FilePath $rapor -Append
+	getProcessesNModules | Out-File -FilePath $rapor -Append
+	getBITS | Out-File -FilePath $rapor -Append
+	getTCPConnections | Out-File -FilePath $rapor -Append
+	getClipboard | Out-File -FilePath $rapor -Append
+	getPartitions | Out-File -FilePath $rapor -Append
+	getVolumes | Out-File -FilePath $rapor -Append
+	getDisks | Out-File -FilePath $rapor -Append
+	getInstalledDrivers | Out-File -FilePath $rapor -Append
+	getServices | Out-File -FilePath $rapor -Append
+	getUsers | Out-File -FilePath $rapor -Append
+	getScheduledTasks | Out-File -FilePath $rapor -Append
+	findLNKFiles | Out-File -FilePath $rapor -Append
+	findOfficeDocs | Out-File -FilePath $rapor -Append
+	getStartupFolder | Out-File -FilePath $rapor -Append
+	getHiddenFiles | Out-File -FilePath $rapor -Append
+	getTmpFolder | Out-File -FilePath $rapor -Append
+	getAPPDATAFolder | Out-File -FilePath $rapor -Append
+	getRegistryValues | Out-File -FilePath $rapor -Append
+	system32SignatureCheck | Out-File -FilePath $rapor -Append
+	system32FolderChec | Out-File -FilePath $rapor -Append
 }
 
 scriptManager
