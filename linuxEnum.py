@@ -32,10 +32,13 @@
 # [X] Apps installed
 # [X] Login history
 # [X] Groups
+# [X] Hook detection
 
 #!/usr/bin/python
 
 import os
+import re
+import subprocess
 
 def executeCmd(cmd, level):
     if cmd is not "":
@@ -48,13 +51,56 @@ def executeCmd(cmd, level):
 #                innerRes = stdout.read().split('\n')
 #                printOut(innerRes, level)
 
-
 def printOut(out, level):
     if out is not '':
         for i in out:
             print(((level * 4 * ' ') + '{:}').format(i))
         print
         print
+
+def hookDetection():
+	debian = '/etc/debian_version'
+	redhat = '/etc/redhat-release'
+	for processPid in os.listdir("/proc"):
+		maps = '/proc/' + processPid + '/maps'
+		if os.path.exists(maps): 
+			file = open(maps, "r")
+			for kutuphane in file.readlines():
+				matchedProcess = re.search(r'\s[\w-][\w-]([\w-])[\w-].*\s\s\s\s*([\w\/].*)', kutuphane)
+				if matchedProcess and matchedProcess.group(1) == 'x':
+					isDeleted = re.search(r'\(deleted\)', matchedProcess.group(2))
+					if not isDeleted:
+						if os.path.exists(redhat):
+							cmdRedhat = 'rpm -Vf "' + matchedProcess.group(2) + '"' 
+							processRpm = subprocess.Popen([cmdRedhat], stdout = subprocess.PIPE, shell=True)
+							outputRpm = processRpm.communicate()[0]
+							if outputRpm:
+								outputRpmFile = re.search(matchedProcess.group(2) , outputRpm)
+								if outputRpmFile:
+									print(('{}').format("Suspicious library or process %s @ PID: %s" % (matchedProcess.group(2), processPid)))
+						if os.path.exists(debian) :
+							cmdDebian = 'dpkg -S "'+ matchedProcess.group(2) + '"'
+							DEVNULL = open(os.devnull, 'wb')
+							processDpkg = subprocess.Popen([cmdDebian], stdout=subprocess.PIPE,shell=True, stderr=DEVNULL)
+							outputDpkg = processDpkg.communicate()[0]
+							if processDpkg.returncode == 1:
+								fixDpkgBug = re.sub('/usr', '', matchedProcess.group(2))
+								cmd2 = 'dpkg -S "' + fixDpkgBug + '"'
+								DEVNULL = open(os.devnull, 'wb')
+								processDpkg2 = subprocess.Popen([cmd2], stdout=subprocess.PIPE, shell=True, stderr=DEVNULL)
+								outputDpkg2 = processDpkg2.communicate()[0]
+								outputDpkg = outputDpkg2
+								if processDpkg2.returncode == 1:
+									print(('{}').format("Suspicious library or process %s @ PID: %s" % (matchedProcess.group(2), processPid)))
+								else:
+									paketAdi = outputDpkg.split(":")
+									cmdDebianSum = 'dpkg --verify "' + paketAdi[0] + '"'
+									processDebSum = subprocess.Popen([cmdDebianSum], stdout=subprocess.PIPE,shell=True)
+									outputDebSum = processDebSum.communicate()[0]
+									if outputDebSum:
+										outputDebFile = re.search(matchedProcess.group(2) , outputDebSum)
+										if outputDebFile:
+											print(('{}').format("Suspicious library or process %s @ PID: %s" % (matchedProcess.group(2), processPid)))	
 
 def banner():
     print
@@ -249,6 +295,9 @@ def main():
     
     print(('{}').format("[+] PARTITIONS"))
     executeCmd({0:"lsblk -o 'NAME,MAJ:MIN,RM,SIZE,RO,FSTYPE,MOUNTPOINT,UUID'"}, 1)
+    
+    print(('{}').format("[+] SUSPICIOUS LIBRARIES/PROCESSES"))
+    hookDetection()
     
     print(('{}').format("[+] KERNEL MODULES"))
     executeCmd({0:"lsmod"}, 1)
