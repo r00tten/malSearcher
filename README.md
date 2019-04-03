@@ -47,7 +47,7 @@ Malware searcher on Windows and Linux machines
 \# [X] tmp Folder<br/>
 \# [X] appdata<br/>
 
-###Linux
+### Linux
 \# [X] .bash_profile .bashrc<br/>
 \# [X] Accounts<br/>
 \# [X] Hidden Files<br/>
@@ -119,3 +119,8 @@ Malware searcher on Windows and Linux machines
 \# [X] Rc.common<br/>
 \# [X] Launchctl<br/>
 \# [X] Startup Item<br/>
+
+## Acknowledgments
+
+* [Mert Can](https://github.com/mertcancoskuner)
+* [emrechan](https://github.com/emrechan)
