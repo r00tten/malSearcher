@@ -1,0 +1,23 @@
+---
+- hosts: WIN
+  gather_facts: True
+
+  tasks:
+    - name: Create Temp Dir
+      win_file:
+        path: C:\temp
+        state: directory
+
+    - name: Copy malSearcher to Remote Location
+      win_copy:
+        src: files/windowsEnum.ps1
+        dest: C:\temp\windowsEnum.ps1
+
+    - name: Run malSearcher on Remote
+      win_shell: C:\temp\windowsEnum.ps1 > C:\temp\{{ansible_fqdn}}_output.txt
+
+    - name: Copy Output from Remote to Local
+      fetch:
+        src: C:\temp\malSearcher.log
+        dest: output/{{ansible_fqdn}}_output.txt
+        flat: yes

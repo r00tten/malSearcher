@@ -1,0 +1,23 @@
+---
+- hosts: INIT
+  gather_facts: True
+  become: True
+
+  tasks:
+    - name: Copy malSearcher to Remote Location
+      copy:
+        src: files/linuxEnum.py
+        dest: /tmp/linuxEnum.py
+        owner: ans
+        group: sudo
+        mode: 0777
+
+    - name: Run malSearcher on Remote
+      raw: /tmp/linuxEnum.py &> /tmp/{{ansible_fqdn}}_output.txt
+
+    - name: Copy Output from Remote to Local
+      fetch:
+        src: /tmp/{{ansible_fqdn}}_output.txt
+        dest: output/
+        mode: 774
+        flat: yes
